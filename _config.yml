@@ -13,7 +13,7 @@ sass:
   sass_dir: _sass
 plainwhite:
   name: CSharpCooking
-  tagline: Рецепты _вкусных_ программ
+  tagline: Рецепты <i>вкусных</i> программ
   sitemap: true # set to true to generate sitemap.xml content
   search: true # set to true to enable searchbar
   disqus_shortname: csharpcooking
