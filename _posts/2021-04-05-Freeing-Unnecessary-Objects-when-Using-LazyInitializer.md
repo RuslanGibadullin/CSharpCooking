@@ -185,6 +185,8 @@ class Expensive : IDisposable
 
 Обратите внимание, что в программе использовался другой дескриптор ожидания `tokenReady`, чтобы избежать освобождения неуправляемого дескриптора обратного вызова (посредством метода `Unregister`) до присваивания переменной `reg` признака регистрации.
 
+<span style="display: block; text-align: center">
 <iframe width="480" height="284" src="https://www.youtube.com/embed/sHODwYHZGnQ" loading="lazy" frameborder="0" allowfullscreen=""></iframe>
+</span>
 
 [^1]: Албахари Д. C# 7.0. Справочник. Полное описание языка / Албахари Д., Албахари Б. // Пер. с англ. – Москва: Альфа-Книга. – 2018.
