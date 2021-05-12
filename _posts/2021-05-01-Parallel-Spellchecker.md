@@ -9,7 +9,7 @@ date: 2021-05-01
 
 Начальный шаг предусматривает загрузку словаря в объект [`HashSet`](https://github.com/microsoft/referencesource/blob/master/System.Core/System/Collections/Generic/HashSet.cs), который обеспечивает эффективный поиск посредством быстрого вычисления хеш-значения, указывающего расположение искомого объекта.
 
-```c#
+```csharp
 if (!File.Exists(wordLookupFile)) // Contains about 150,000 words
 new WebClient().DownloadFile("https://csharpcooking.github.io/data/allwords.txt", 
 							 wordLookupFile);
@@ -19,7 +19,7 @@ var wordLookup = new HashSet<string>(File.ReadAllLines(wordLookupFile),
 
 Затем мы будем применять полученное средство поиска слов для создания тестового "документа", содержащего массив из миллиона случайных слов. После построения массива мы внесем пару орфографических ошибок:
 
-```c#
+```csharp
 var random = new Random();
 string[] wordList = wordLookup.ToArray();
 string[] wordsToTest = Enumerable.Range(0, 1000000)
@@ -31,7 +31,7 @@ wordsToTest[23456] = "wubsie"; // of spelling mistakes.
 
 Теперь мы можем выполнить параллельную проверку орфографии, сверяя `wordsToTest` с `wordLookup`. PLINQ, представляющий собой параллельный вариант языка интегрированных запросов LINQ, позволяет делать это очень просто:
 
-```c#
+```csharp
 var query = wordsToTest.AsParallel()
 .Select((word, index) => new IndexedWord { Word = word, Index = index })
 .Where(iword => !wordLookup.Contains(iword.Word))
@@ -46,7 +46,7 @@ foreach (var mistake in query)
 
 `IndexedWord` – это специальная структура, которая определена следующим образом:
 
-```c#
+```csharp
 struct IndexedWord { public string Word; public int Index; }
 ```
 
@@ -60,7 +60,7 @@ struct IndexedWord { public string Word; public int Index; }
 
 Расширим наш пример, распараллелив само создание случайного тестового списка слов. Мы структурировали его как запрос LINQ, так что все должно быть легко. Вот последовательная версия:
 
-```c#
+```csharp
 string[] wordsToTest = Enumerable.Range(0, 1000000)
 .Select(i => wordList[random.Next(0, wordList.Length)])
 .ToArray();
@@ -68,7 +68,7 @@ string[] wordsToTest = Enumerable.Range(0, 1000000)
 
 К сожалению, вызов метода `random.Next` небезопасен в отношении потоков, поэтому работа не сводится к простому добавлению в запрос вызова `AsParallel`. Потенциальным решением может быть написание функции, помещающей вызов `random.Next` внутрь блокировки, но это ограничило бы параллелизм. Более удачный вариант предусматривает применение класса `ThreadLocal<Random>` с целью создания отдельного объекта `Random` для каждого потока. Тогда распараллелить запрос можно следующим образом:
 
-```c#
+```csharp
 
 var localRandom = new ThreadLocal<Random>
 (() => new Random(Guid.NewGuid().GetHashCode()));
