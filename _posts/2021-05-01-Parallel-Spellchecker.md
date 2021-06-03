@@ -81,9 +81,6 @@ string[] wordsToTest = Enumerable.Range(0, 1000000).AsParallel()
 
 > GUID – это 128-разрядное целое число (16 байт), которое можно использовать на всех компьютерах и в сетях везде, где требуется уникальный идентификатор. Такой идентификатор имеет очень низкую вероятность дублирования.
 
-<center>
-<iframe width="330" height="186" src="https://www.youtube.com/embed/Ozlpz60hTKg" loading="lazy" frameborder="0" allowfullscreen=""></iframe></center>
-
 По данному рецепту имеется видео в [YouTube](https://youtu.be/Ozlpz60hTKg).
 
 [^1]: Албахари Д. C# 7.0. Справочник. Полное описание языка / Албахари Д., Албахари Б. // Пер. с англ. – Москва: Альфа-Книга. – 2018.
