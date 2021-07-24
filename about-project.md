@@ -11,4 +11,4 @@
 - ВК: [https://vk.com/RuslanGibadullin](https://vk.com/RuslanGibadullin)
 - Telegram: [https://t.me/RuslanGibadullin](https://t.me/RuslanGibadullin)
 - WhatsApp: [https://wa.me/79172262386](https://wa.me/79172262386)
-- Email: [landwatersun@gmail.com](landwatersun@gmail.com)
+- Email: [landwatersun@gmail.com](mailto:landwatersun@gmail.com)
