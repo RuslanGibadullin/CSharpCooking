@@ -8,6 +8,7 @@
 
 ### Контакты
 - Телефон: +7 917 226 23 86
+- Instagram: [https://www.instagram.com/CSharpCooking](https://www.instagram.com/CSharpCooking)
 - ВК: [https://vk.com/RuslanGibadullin](https://vk.com/RuslanGibadullin)
 - Telegram: [https://t.me/RuslanGibadullin](https://t.me/RuslanGibadullin)
 - WhatsApp: [https://wa.me/79172262386](https://wa.me/79172262386)
