@@ -22,10 +22,10 @@ plainwhite:
     - page
     - post
   navigation:
-    - title: My Work
-      url: "/my-work"
-    - title: Resume
-      url: "/resume"
+    - title: О проекте
+      url: "/about-project"
+    - title: Рекомендуемая литература
+      url: "/literature"
   # generate social links in footer
   social_links:
     #twitter: samarsault
