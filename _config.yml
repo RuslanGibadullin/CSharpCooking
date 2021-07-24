@@ -22,6 +22,8 @@ plainwhite:
     - page
     - post
   navigation:
+    - title: Главная
+      url: "/"
     - title: О проекте
       url: "/about-project"
     - title: Рекомендуемые источники
