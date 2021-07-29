@@ -71,7 +71,7 @@ public class WeakDelegate<TDelegate> where TDelegate : class
   class MethodTarget
   {
     public readonly WeakReference Reference;
-    public readonly Methodlnfo Method;
+    public readonly MethodInfo Method;
     public MethodTarget(Delegate d)
     {
       // d.Target будет null для целей в виде статических методов:
