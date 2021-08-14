@@ -134,7 +134,7 @@ private static T EnsureInitializedCore<T>
 static ManualResetEvent _starter = 
   new ManualResetEvent(false);
 const int N = 4;
-void Main()
+static void Main()
 {
   A a = new A();
   Thread[] T = new Thread[N];
