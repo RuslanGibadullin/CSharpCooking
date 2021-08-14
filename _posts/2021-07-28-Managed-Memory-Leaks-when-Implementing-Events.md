@@ -43,7 +43,7 @@ class Test
 		Client[] clients = Enumerable.Range(0, 1000)
 		.Select(i => new Client(_host))
 		.ToArray();
-		// Делать что-нибудь с экземплярами класса Client...
+		// Делать что-нибудь с экземплярами класса Client ...
 	}
 }
 ```
@@ -80,19 +80,19 @@ Console.WriteLine(weak.Target); // Выводит this is a test
 Если на целевой объект имеется только одна или более слабых ссылок, то сборщик мусора считает его пригодным для сборки. После того, как целевой объект обработан сборщиком мусора, свойство Target экземпляра `WeakReference` получает значение `null`:
 
 ```csharp
-WeakReference weak;
-void Main()
+static WeakReference weak;
+static void Main()
 {
   InitWR();
   ShowTarget(); // Выводит weak
   GC.Collect();
   ShowTarget(); // Выводит null
 }
-void InitWR()
+static void InitWR()
 {
   weak = new WeakReference(new StringBuilder("week"));
 }
-void ShowTarget()
+static void ShowTarget()
 {
   if (weak.Target != null) Console.WriteLine(weak.Target.ToString());
   else Console.WriteLine("null");
@@ -102,8 +102,8 @@ void ShowTarget()
 Во избежание обработки сборщиком мусора целевого объекта его следует присвоить локальной переменной. Так он получит надежный корневой объект и потому не сможет быть обработан сборщиком мусора, пока эта переменная используется. Следует отметить, если переделать вышеуказанный код следующим образом:
 
 ```csharp
-WeakReference weak;
-void Main()
+static WeakReference weak;
+static void Main()
 {
   var sb = new StringBuilder("week");
   weak = new WeakReference(sb);
@@ -111,7 +111,7 @@ void Main()
   GC.Collect();
   ShowTarget();
 }
-void ShowTarget()
+static void ShowTarget()
 {
   if (weak.Target != null) Console.WriteLine(weak.Target.ToString());
   else Console.WriteLine("null");
@@ -202,7 +202,7 @@ public class WeakDelegate<TDelegate> where TDelegate : class
 
 Взамен мы должны выбрать ограничение класса и предусмотреть в конструкторе проверку во время выполнения.
 
-В методах `Combine` и `Remove` мы осуществляем ссылочное преобразование `target` в `Delegate` с помощью операции `as`, а не более привычной операции приведения. Причина в том, что C# запрещает использовать операцию приведения с таким параметром типа, поскольку существует потенциальная неоднозначность между специальным, преобразованием и ссылочным преобразованием.
+В методах `Combine` и `Remove` мы осуществляем ссылочное преобразование `target` в `Delegate` с помощью операции `as`, а не более привычной операции приведения. Причина в том, что C# запрещает использовать операцию приведения с таким параметром типа, поскольку существует потенциальная неоднозначность между специальным преобразованием и ссылочным преобразованием.
 
 Затем мы вызываем метод `GetInvocationList`, т.к. эти методы могут быть вызваны групповыми делегатами, т.е. делегатами с более чем одним методом для вызова.
 
