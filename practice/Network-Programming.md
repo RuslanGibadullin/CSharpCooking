@@ -10,102 +10,101 @@
 
     Для выполнения задания рекомендуется ознакомиться с примерами исходных кодов серверного и клиентского приложений на базе алгоритма шифрования DES:
     
-```csharp
-using System;
-using System.Text;
-using System.IO;
-using System.Net;
-using System.Net.Sockets;
-using System.Security.Cryptography;
-namespace Server
-{
-  static class Program
-  {
-    static void Main(string[] args)
+    ```csharp
+    using System;
+    using System.Text;
+    using System.IO;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Security.Cryptography;
+    namespace Server
     {
-      byte[] bytesRecv = new byte[4096];
-      TcpListener listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 5001);
-      listener.Start();
-      Socket tc = listener.AcceptSocket();
-      //Получение
-      tc.Receive(bytesRecv);
-      string msg = Encoding.Unicode.GetString(bytesRecv);
-      Console.WriteLine(msg.Remove(msg.IndexOf('\0')).Decrypt());
-      //Отправка
-      tc.Send(Encoding.Unicode.GetBytes(Crypt("Secret message from server.")));
-      tc.Close();
+      static class Program
+      {
+        static void Main(string[] args)
+        {
+          byte[] bytesRecv = new byte[4096];
+          TcpListener listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 5001);
+          listener.Start();
+          Socket tc = listener.AcceptSocket();
+          //Получение
+          tc.Receive(bytesRecv);
+          string msg = Encoding.Unicode.GetString(bytesRecv);
+          Console.WriteLine(msg.Remove(msg.IndexOf('\0')).Decrypt());
+          //Отправка
+          tc.Send(Encoding.Unicode.GetBytes(Crypt("Secret message from server.")));
+          tc.Close();
+        }
+        private static byte[] key = new byte[8] { 1, 2, 3, 4, 5, 6, 7, 8 };
+        private static byte[] iv = new byte[8] { 1, 2, 3, 4, 5, 6, 7, 8 };
+        public static string Crypt(this string text)
+        {
+          SymmetricAlgorithm algorithm = DES.Create();
+          ICryptoTransform transform = algorithm.CreateEncryptor(key, iv);
+          byte[] inputbuffer = Encoding.Unicode.GetBytes(text);
+          byte[] outputBuffer = transform.TransformFinalBlock(inputbuffer, 0, inputbuffer.Length);
+          return Encoding.Unicode.GetString(outputBuffer);
+        }
+        public static string Decrypt(this string text)
+        {
+          SymmetricAlgorithm algorithm = DES.Create();
+          ICryptoTransform transform = algorithm.CreateDecryptor(key, iv);
+   			byte[] inputbuffer = Encoding.Unicode.GetBytes(text);
+   			byte[] outputBuffer = transform.TransformFinalBlock(inputbuffer, 0, inputbuffer.Length);
+   			return Encoding.Unicode.GetString(outputBuffer);
+    		}
+   	}
     }
-    private static byte[] key = new byte[8] { 1, 2, 3, 4, 5, 6, 7, 8 };
-    private static byte[] iv = new byte[8] { 1, 2, 3, 4, 5, 6, 7, 8 };
-    public static string Crypt(this string text)
-    {
-      SymmetricAlgorithm algorithm = DES.Create();
-      ICryptoTransform transform = algorithm.CreateEncryptor(key, iv);
-      byte[] inputbuffer = Encoding.Unicode.GetBytes(text);
-      byte[] outputBuffer = transform.TransformFinalBlock(inputbuffer, 0, inputbuffer.Length);
-      return Encoding.Unicode.GetString(outputBuffer);
-    }
-    public static string Decrypt(this string text)
-    {
-      SymmetricAlgorithm algorithm = DES.Create();
-      ICryptoTransform transform = algorithm.CreateDecryptor(key, iv);
-			byte[] inputbuffer = Encoding.Unicode.GetBytes(text);
-			byte[] outputBuffer = transform.TransformFinalBlock(inputbuffer, 0, inputbuffer.Length);
-			return Encoding.Unicode.GetString(outputBuffer);
-		}
-	}
-}
-```
+    ```
 
-
-```csharp
-using System;
-using System.Text;
-using System.IO;
-using System.Net;
-using System.Net.Sockets;
-using System.Security.Cryptography;
-namespace Client
-{
-  static class Program
-  {
-    static void Main(string[] args)
+    ```csharp
+    using System;
+    using System.Text;
+    using System.IO;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Security.Cryptography;
+    namespace Client
     {
-      byte[] bytesRecv = new byte[4096];
-      Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-      client.Connect("127.0.0.1", 5001);
-      //Отправка
-      client.Send(Encoding.Unicode.GetBytes(Crypt("Secret message from client.")));
-      //Получение
-      client.Receive(bytesRecv);
-      string msg = Encoding.Unicode.GetString(bytesRecv);
-      Console.WriteLine(msg.Remove(msg.IndexOf('\0')).Decrypt());
-      client.Close();
+      static class Program
+      {
+        static void Main(string[] args)
+        {
+          byte[] bytesRecv = new byte[4096];
+          Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+          client.Connect("127.0.0.1", 5001);
+          //Отправка
+          client.Send(Encoding.Unicode.GetBytes(Crypt("Secret message from client.")));
+          //Получение
+          client.Receive(bytesRecv);
+          string msg = Encoding.Unicode.GetString(bytesRecv);
+          Console.WriteLine(msg.Remove(msg.IndexOf('\0')).Decrypt());
+          client.Close();
+        }
+        private static byte[] key = new byte[8] { 1, 2, 3, 4, 5, 6, 7, 8 };
+        private static byte[] iv = new byte[8] { 1, 2, 3, 4, 5, 6, 7, 8 };
+        public static string Crypt(this string text)
+        {
+          SymmetricAlgorithm algorithm = DES.Create();
+          ICryptoTransform transform = algorithm.CreateEncryptor(key, iv);
+          byte[] inputbuffer = Encoding.Unicode.GetBytes(text);
+          byte[] outputBuffer = transform.TransformFinalBlock(inputbuffer, 0, inputbuffer.Length);
+          return Encoding.Unicode.GetString(outputBuffer);
+        }
+        public static string Decrypt(this string text)
+        {
+          SymmetricAlgorithm algorithm = DES.Create();
+   			ICryptoTransform transform = algorithm.CreateDecryptor(key, iv);
+   			byte[] inputbuffer = Encoding.Unicode.GetBytes(text);
+   			byte[] outputBuffer = transform.TransformFinalBlock(inputbuffer, 0, inputbuffer.Length);
+   			return Encoding.Unicode.GetString(outputBuffer);
+    		}
+   	}
     }
-    private static byte[] key = new byte[8] { 1, 2, 3, 4, 5, 6, 7, 8 };
-    private static byte[] iv = new byte[8] { 1, 2, 3, 4, 5, 6, 7, 8 };
-    public static string Crypt(this string text)
-    {
-      SymmetricAlgorithm algorithm = DES.Create();
-      ICryptoTransform transform = algorithm.CreateEncryptor(key, iv);
-      byte[] inputbuffer = Encoding.Unicode.GetBytes(text);
-      byte[] outputBuffer = transform.TransformFinalBlock(inputbuffer, 0, inputbuffer.Length);
-      return Encoding.Unicode.GetString(outputBuffer);
-    }
-    public static string Decrypt(this string text)
-    {
-      SymmetricAlgorithm algorithm = DES.Create();
-			ICryptoTransform transform = algorithm.CreateDecryptor(key, iv);
-			byte[] inputbuffer = Encoding.Unicode.GetBytes(text);
-			byte[] outputBuffer = transform.TransformFinalBlock(inputbuffer, 0, inputbuffer.Length);
-			return Encoding.Unicode.GetString(outputBuffer);
-		}
-	}
-}
-```
-
-3. Развить решение первого задания, обеспечив передачу данных между клиентом и сервером по защищенному каналу с использованием криптографического алгоритма AES.
-4. Разработать программу для авторизации на сайте и вывода списка товаров корзины пользователя. В качестве сайта можно быбрать [bookland.com](http://www.bookland.com).    
+    ```
+{:start="3"}
+1. Развить решение первого задания, обеспечив передачу данных между клиентом и сервером по защищенному каналу с использованием криптографического алгоритма AES.
+2. Разработать программу для авторизации на сайте и вывода списка товаров корзины пользователя. В качестве сайта можно быбрать [bookland.com](http://www.bookland.com).    
   Пример авторизации на сайте с сериализацией/десериализацией cookie-наборов представлен ниже.
 
 ```csharp
