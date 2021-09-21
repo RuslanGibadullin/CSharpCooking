@@ -8,5 +8,5 @@
 
 ### Практика
 - Практикум по параллельному программированию на языке C# / Под редакцией Р.Ф. Гибадуллина [Электронный ресурс] // © CSharpCooking 2021. URL: [https://csharpcooking.github.io/practice/PPCSharp.zip](https://csharpcooking.github.io/data/PPCSharp.zip).
-- Практикум по сетевому программированию на языке C# / Под редакцией Р.Ф. Гибадуллина [Электронный ресурс] // © CSharpCooking 2021. URL: [https://csharpcooking.github.io/practice/Network-Programming](https://csharpcooking.github.io/data/PPCSharp.zip).
-- Практикум по составлению запросов на языках SQL и LINQ / Под редакцией Р.Ф. Гибадуллина [Электронный ресурс] // © CSharpCooking 2021. URL: [https://csharpcooking.github.io/practice/PPCSharp.zip](https://csharpcooking.github.io/data/PPCSharp.zip).
+- Практикум по сетевому программированию на языке C# / Под редакцией Р.Ф. Гибадуллина [Электронный ресурс] // © CSharpCooking 2021. URL: [https://csharpcooking.github.io/practice/Network-Programming](https://csharpcooking.github.io/practice/Network-Programming).
+- Практикум по составлению запросов на языках SQL и LINQ / Под редакцией Р.Ф. Гибадуллина [Электронный ресурс] // © CSharpCooking 2021.
