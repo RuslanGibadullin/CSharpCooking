@@ -102,50 +102,50 @@
    	}
     }
     ```
-{:start="3"}
-1. Развить решение первого задания, обеспечив передачу данных между клиентом и сервером по защищенному каналу с использованием криптографического алгоритма AES.
-2. Разработать программу для авторизации на сайте и вывода списка товаров корзины пользователя. В качестве сайта можно быбрать [bookland.com](http://www.bookland.com).    
+
+3. Развить решение первого задания, обеспечив передачу данных между клиентом и сервером по защищенному каналу с использованием криптографического алгоритма AES.
+4. Разработать программу для авторизации на сайте и вывода списка товаров корзины пользователя. В качестве сайта можно быбрать [bookland.com](http://www.bookland.com).    
   Пример авторизации на сайте с сериализацией/десериализацией cookie-наборов представлен ниже.
 
-```csharp
-void Main()
-{
-  func().Wait();
-}
-async Task func()
-{
-  CookieContainer cc = new CookieContainer();
-  var handler = new HttpClientHandler { CookieContainer = cc };
-  var request = new HttpRequestMessage(HttpMethod.Post, "адрес регистрационной формы сайта");
-  request.Content = new FormUrlEncodedContent(new Dictionary<string, string>
-  { { "form_sent", "1" },
-  { "redirect_url", "" },
-  { "req_username", "user" },
-  { "req_password", "user" },
-  { "login", "%C2%EE%E9%F2%E8" } });
-  var client = new HttpClient(handler);
-  var response = await client.SendAsync(request);
-  string responseString = await response.Content.ReadAsStringAsync();
-  using (StreamWriter sw = new StreamWriter(@"..\Downloads\code.html", false, System.Text.Encoding.Default))
-  {
-    sw.Write(responseString);
-  }
-  var formatter = new SoapFormatter();
-  using (Stream s = File.Create(@"..\Downloads\cookies.dat"))
-    formatter.Serialize(s, cc);
-  CookieContainer cc2 = null;
-  using (Stream s = File.OpenRead(@"..\Downloads\cookies.dat"))
-    cc2 = (CookieContainer)formatter.Deserialize(s);
-  var handler2 = new HttpClientHandler { CookieContainer = cc2 };
-  var client2 = new HttpClient(handler2);
-  var response2 = await client2.GetAsync("адрес сайта");
-  string responseString2 = await response2.Content.ReadAsStringAsync();
-  using (StreamWriter sw = new StreamWriter(@"..\Downloads\code2.html", false, System.Text.Encoding.Default))
-  {
-    sw.Write(responseString2);
-  }
-}
-```
+    ```csharp
+    void Main()
+    {
+      func().Wait();
+    }
+    async Task func()
+    {
+      CookieContainer cc = new CookieContainer();
+      var handler = new HttpClientHandler { CookieContainer = cc };
+      var request = new HttpRequestMessage(HttpMethod.Post, "адрес регистрационной формы сайта");
+      request.Content = new FormUrlEncodedContent(new Dictionary<string, string>
+      { { "form_sent", "1" },
+      { "redirect_url", "" },
+      { "req_username", "user" },
+      { "req_password", "user" },
+      { "login", "%C2%EE%E9%F2%E8" } });
+      var client = new HttpClient(handler);
+      var response = await client.SendAsync(request);
+      string responseString = await response.Content.ReadAsStringAsync();
+      using (StreamWriter sw = new StreamWriter(@"..\Downloads\code.html", false, System.Text.Encoding.Default))
+      {
+        sw.Write(responseString);
+      }
+      var formatter = new SoapFormatter();
+      using (Stream s = File.Create(@"..\Downloads\cookies.dat"))
+        formatter.Serialize(s, cc);
+      CookieContainer cc2 = null;
+      using (Stream s = File.OpenRead(@"..\Downloads\cookies.dat"))
+        cc2 = (CookieContainer)formatter.Deserialize(s);
+      var handler2 = new HttpClientHandler { CookieContainer = cc2 };
+      var client2 = new HttpClient(handler2);
+      var response2 = await client2.GetAsync("адрес сайта");
+      string responseString2 = await response2.Content.ReadAsStringAsync();
+      using (StreamWriter sw = new StreamWriter(@"..\Downloads\code2.html", false, System.Text.Encoding.Default))
+      {
+        sw.Write(responseString2);
+      }
+    }
+    ```
 
 Для выполнения практикума рекомендуется руководствоваться источником:
 * Албахари Д. C# 7.0. Справочник. Полное описание языка / Албахари Д., Албахари Б. // Пер. с англ. – Москва: Альфа-Книга. – 2018. Глава 16. Взаимодействие с сетью.
